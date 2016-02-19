@@ -1,4 +1,4 @@
-package com.dxx.loginrobotium;
+package com.philips.demo;
 
 import org.junit.Test;
 
