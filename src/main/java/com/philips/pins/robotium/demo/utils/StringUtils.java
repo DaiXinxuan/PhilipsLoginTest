@@ -15,4 +15,10 @@ public class StringUtils {
     public final static String USERNAME_REUSED = "Username has already been registered";
     public final static String REGIST_SUCCESS = "Regist successfully";
     public static final String PASSWORD = "password";
+    public static final String USERNAME_EMPTY_TEST = "Username can be empty";
+    public static final String PASSWORD_EMPTY_TEST = "Password can be empty";
+    public static final String ADD_USER_TEST = "Regist failed";
+    public static final String ADD_EXISTING_USER_TEST = "Existing username still can be registed";
+    public static final String NONEXISTENT_USER_LOGIN = "The user doesn't exist can login";
+    public static final String WRONGPASS_USER_LOGIN = "Username with wrong password also can login";
 }
