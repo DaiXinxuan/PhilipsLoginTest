@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">LoginRobotium</string>
+    <string name="first_hint">Please enter account number</string>
+    <string name="second_hint">Please enter the password</string>
+    <string name="login">Login</string>
+    <string name="regist">Registration</string>
 </resources>

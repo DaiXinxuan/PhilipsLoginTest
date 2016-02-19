@@ -6,18 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.philips.demo.R;
+import com.philips.pins.robotium.demo.utils.StringUtils;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText usernameEd;
     private EditText passwordEd;
-    private Button loginBtn;
-    private Button registBtn;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
@@ -26,17 +23,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        sharedPreferences = getSharedPreferences("profile", Activity.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(StringUtils.PROFILE, Activity.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         //If the number of users has not been initialized, let it be 0
-        int count = sharedPreferences.getInt("count", -1);
+        int count = sharedPreferences.getInt(StringUtils.COUNT, -1);
         if (count == -1) {
-            editor.putInt("count",0);
+            editor.putInt(StringUtils.COUNT,0);
             editor.commit();
         }
         //Display the last account logged successfully
-        if (!sharedPreferences.getString("username","").equals("")) {
-            usernameEd.setText(sharedPreferences.getString("username", ""));
+        if (!sharedPreferences.getString(StringUtils.USERNAME,"").equals("")) {
+            usernameEd.setText(sharedPreferences.getString(StringUtils.USERNAME, ""));
         }
     }
 
@@ -44,39 +41,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
         usernameEd = (EditText) findViewById(R.id.ed_username);
         passwordEd = (EditText) findViewById(R.id.ed_password);
-        loginBtn = (Button) findViewById(R.id.login_button);
-        registBtn = (Button) findViewById(R.id.regist_button);
     }
 
     @Override
     public void onClick(View v) {
         String username = usernameEd.getText().toString();
         String password = passwordEd.getText().toString();
-        int count = sharedPreferences.getInt("count", 0);
+        int count = sharedPreferences.getInt(StringUtils.COUNT, 0);
 
         if (TextUtils.isEmpty(username)) {
-            Toast.makeText(getApplicationContext(),"Username can not be empty",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),StringUtils.EMPTY_TOAST_USERNAME,Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(),"Password can not be empty",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),StringUtils.EMPTY_TOAST_PASSWORD,Toast.LENGTH_SHORT).show();
         } else {
             switch (v.getId()) {
                 case R.id.login_button:
                     if (getUserNumber(count, username) == -1) {
-                        Toast.makeText(getApplicationContext(), "The username does not exist",
+                        Toast.makeText(getApplicationContext(), StringUtils.NONEXISTENT_USER,
                                 Toast.LENGTH_SHORT).show();
                     } else {
-                        String correctPass = sharedPreferences.getString("password" + getUserNumber(count, username), "");
+                        String correctPass = sharedPreferences.getString(StringUtils.PASSWORD + getUserNumber(count, username), "");
                         if (password.equals(correctPass))
-                            Toast.makeText(getApplicationContext(), "Successful login", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), StringUtils.LOGIN_SUCCESS, Toast.LENGTH_SHORT).show();
                         else
-                            Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), StringUtils.LOGIN_FAIL, Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case R.id.regist_button:
                     if (count != 0) {
                         //Judge whether the username is already registered
                         if (isReused(count, username)) {
-                            Toast.makeText(getApplicationContext(), "Username has already been registered",
+                            Toast.makeText(getApplicationContext(), StringUtils.USERNAME_REUSED,
                                     Toast.LENGTH_SHORT).show();
                         } else {
                             //Add a new user
@@ -93,12 +88,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void addUser(int count, String username, String password){
         count += 1;
-        editor.putString("username" + count, username);
-        editor.putString("password" + count, password);
-        editor.putInt("count", count);
-        editor.putString("username", username);
+        editor.putString(StringUtils.USERNAME + count, username);
+        editor.putString(StringUtils.PASSWORD + count, password);
+        editor.putInt(StringUtils.COUNT, count);
+        editor.putString(StringUtils.USERNAME, username);
         editor.commit();
-        Toast.makeText(getApplicationContext(), "Regist successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), StringUtils.REGIST_SUCCESS, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -109,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     public boolean isReused(int count, String username) {
         for (int i = 1;i <= count;i++) {
-            String currentUsername = sharedPreferences.getString("username"+i,"");
+            String currentUsername = sharedPreferences.getString(StringUtils.USERNAME + i,"");
             if (username.equals(currentUsername)) {
                 return true;
             }
@@ -127,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int i = 1;
         if(isReused(count, username)) {
             for (i = 1;i <= count;i++) {
-                String currentUsername = sharedPreferences.getString("username"+i,"");
+                String currentUsername = sharedPreferences.getString(StringUtils.USERNAME + i,"");
                 if (username.equals(currentUsername)) {
                     break;
                 }
