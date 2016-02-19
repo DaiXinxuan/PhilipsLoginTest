@@ -1,4 +1,4 @@
-package com.dxx.loginrobotium;
+package com.philips.pins.robotium.demo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

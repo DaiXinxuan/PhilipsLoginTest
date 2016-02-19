@@ -1,4 +1,4 @@
-package com.dxx.loginrobotium;
+package com.philips.pins.robotium.demo;
 
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -25,7 +25,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
 
-    public void testUsernameEmpty() throws Exception {
+    public void testAUsernameEmpty() throws Exception {
         //Unlock the lock screen
         solo.unlockScreen();
         //Hides the soft keyboard
@@ -37,7 +37,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         assertTrue("Username can be empty", actual);
     }
 
-    public void testPasswordEmpty() throws Exception {
+    public void testBPasswordEmpty() throws Exception {
         //Unlock the lock screen
         solo.unlockScreen();
         //Hides the soft keyboard
@@ -50,46 +50,46 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         assertTrue("Password can be empty", actual);
     }
 
-    public void testAddNewUser() throws Exception {
+    public void testCAddNewUser() throws Exception {
         //Unlock the lock screen
         solo.unlockScreen();
         solo.hideSoftKeyboard();
         solo.clearEditText(0);
         solo.clearEditText(1);
-        solo.enterText(0, "dxx789");
+        solo.enterText(0, "miniTest2");
         solo.enterText(1, "12345");
         solo.clickOnButton("Registration");
         boolean actual = solo.searchText("Regist successfully");
         assertTrue("Regist failed", actual);
     }
 
-    public void testAddExistingUser() throws Exception {
+    public void testDAddExistingUser() throws Exception {
         //Unlock the lock screen
         solo.unlockScreen();
         solo.hideSoftKeyboard();
         solo.clearEditText(0);
         solo.clearEditText(1);
-        solo.enterText(0, "dxx789");
+        solo.enterText(0, "miniTest2");
         solo.enterText(1, "1234");
         solo.clickOnButton("Registration");
         boolean actual = solo.searchText("Regist successfully");
         assertFalse("Existing username still can be registed", actual);
     }
 
-    public void testLoginExistingUser() throws Exception {
+    public void testELoginExistingUser() throws Exception {
         //Unlock the lock screen
         solo.unlockScreen();
         solo.hideSoftKeyboard();
         solo.clearEditText(0);
         solo.clearEditText(1);
-        solo.enterText(0, "dxx789");
+        solo.enterText(0, "miniTest2");
         solo.enterText(1, "12345");
         solo.clickOnButton("Login");
         boolean actual = solo.searchText("Successful login");
         assertTrue("Login failed!", actual);
     }
 
-    public void testLoginNotExistingUser() throws Exception {
+    public void testFLoginNotExistingUser() throws Exception {
         //Unlock the lock screen
         solo.unlockScreen();
         solo.hideSoftKeyboard();
@@ -102,13 +102,13 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         assertTrue("The user doesn't exist can login", actual);
     }
 
-    public void testLoginWithWrongPass () throws Exception {
+    public void testGLoginWithWrongPass () throws Exception {
         //Unlock the lock screen
         solo.unlockScreen();
         solo.hideSoftKeyboard();
         solo.clearEditText(0);
         solo.clearEditText(1);
-        solo.enterText(0, "dxx789");
+        solo.enterText(0, "miniTest2");
         solo.enterText(1, "123456");
         solo.clickOnButton("Login");
         boolean actual = solo.searchText("Login failed");

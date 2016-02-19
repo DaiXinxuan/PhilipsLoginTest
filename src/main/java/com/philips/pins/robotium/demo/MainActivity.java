@@ -1,4 +1,4 @@
-package com.dxx.loginrobotium;
+package com.philips.pins.robotium.demo;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.philips.demo.R;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText usernameEd;
