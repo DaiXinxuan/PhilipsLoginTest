@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             editor.commit();
         }
         //Display the last account logged successfully
-        if (!sharedPreferences.getString(StringUtils.EMPTY_TOAST_USERNAME,"").equals("")) {
-            usernameEd.setText(sharedPreferences.getString(StringUtils.EMPTY_TOAST_USERNAME, ""));
+        if (!sharedPreferences.getString(StringUtils.USERNAME,"").equals("")) {
+            usernameEd.setText(sharedPreferences.getString(StringUtils.USERNAME, ""));
         }
     }
 
