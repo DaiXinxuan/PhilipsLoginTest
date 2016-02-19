@@ -1,8 +1,7 @@
-package com.philips.demo;
+package com.philips.pins.robotium.demo;
 
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.philips.pins.robotium.demo.MainActivity;
 import com.robotium.solo.Solo;
 
 /**
