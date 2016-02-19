@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //Initialize the controls
     private void initView() {
-        usernameEd = (EditText) findViewById(R.id.ed_username);
-        passwordEd = (EditText) findViewById(R.id.ed_password);
+        usernameEd = (EditText) findViewById(R.id.username);
+        passwordEd = (EditText) findViewById(R.id.password);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(getApplicationContext(),StringUtils.EMPTY_TOAST_PASSWORD,Toast.LENGTH_SHORT).show();
         } else {
             switch (v.getId()) {
-                case R.id.login_button:
+                case R.id.login:
                     if (getUserNumber(count, username) == -1) {
                         Toast.makeText(getApplicationContext(), StringUtils.NONEXISTENT_USER,
                                 Toast.LENGTH_SHORT).show();
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Toast.makeText(getApplicationContext(), StringUtils.LOGIN_FAIL, Toast.LENGTH_SHORT).show();
                     }
                     break;
-                case R.id.regist_button:
+                case R.id.regist:
                     if (count != 0) {
                         //Judge whether the username is already registered
                         if (isReused(count, username)) {

@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             >
             <EditText
-                android:id="@+id/ed_username"
+                android:id="@+id/username"
                 android:hint="@string/first_hint"
                 android:singleLine="true"
                 android:inputType="number"
@@ -35,10 +35,10 @@
                 />
 
             <EditText
-                android:id="@+id/ed_password"
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/button_height"
-                android:layout_below="@+id/ed_username"
+                android:layout_below="@+id/username"
                 android:background="@drawable/bottom_et"
                 android:drawableLeft="@mipmap/pass"
                 android:drawablePadding="@dimen/drawable_padding"
@@ -50,7 +50,7 @@
 
         </RelativeLayout>
         <Button
-            android:id="@+id/login_button"
+            android:id="@+id/login"
             android:layout_marginTop="@dimen/first_margin_top"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
@@ -62,7 +62,7 @@
             android:background="@drawable/login_btn"
             />
         <Button
-            android:id="@+id/regist_button"
+            android:id="@+id/regist"
             android:layout_marginTop="@dimen/second_margin_top"
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height"
