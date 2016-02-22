@@ -55,16 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             switch (v.getId()) {
                 case R.id.login:
-                    if (getUserNumber(count, username) == -1) {
-                        Toast.makeText(getApplicationContext(), getString(R.string.nonexisten_user),
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        String correctPass = sharedPreferences.getString(getString(R.string.password) + getUserNumber(count, username), "");
-                        if (password.equals(correctPass))
-                            Toast.makeText(getApplicationContext(), getString(R.string.login_success), Toast.LENGTH_SHORT).show();
-                        else
-                            Toast.makeText(getApplicationContext(), getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
-                    }
+                    login(username, password, count);
                     break;
                 case R.id.regist:
                     if (count != 0) {
@@ -93,6 +84,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.putString(getString(R.string.user), username);
         editor.commit();
         Toast.makeText(getApplicationContext(), getString(R.string.regist_success), Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     *
+     * @param username
+     * @param password
+     * @param count
+     * @return
+     */
+    public boolean login(String username, String password, int count){
+        if (getUserNumber(count, username) == -1) {
+            Toast.makeText(getApplicationContext(), getString(R.string.nonexisten_user),
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            String correctPass = sharedPreferences.getString(getString(R.string.password) + getUserNumber(count, username), "");
+            if (password.equals(correctPass)) {
+                Toast.makeText(getApplicationContext(), getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+                return true;
+            } else {
+                Toast.makeText(getApplicationContext(), getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        }
     }
 
     /**

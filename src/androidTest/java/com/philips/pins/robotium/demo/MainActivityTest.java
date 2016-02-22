@@ -85,4 +85,6 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         assertTrue(solo.getString(R.string.wrongpass_user_login), actual);
     }
 
+    public void testLogin() throws Exception {
+    }
 }
