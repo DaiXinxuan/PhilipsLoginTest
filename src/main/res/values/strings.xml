@@ -4,4 +4,21 @@
     <string name="second_hint">Please enter the password</string>
     <string name="login">Login</string>
     <string name="regist">Registration</string>
+    <string name="user">username</string>
+    <string name="profile">profile</string>
+    <string name="count">count</string>
+    <string name="empty_user">Username can not be empty</string>
+    <string name="empty_pass">Password can not be empty</string>
+    <string name="nonexisten_user">The username does not exist</string>
+    <string name="login_success">Successful login</string>
+    <string name="login_fail">Login failed</string>
+    <string name="user_resued">Username has already been registered</string>
+    <string name="regist_success">Regist successfully</string>
+    <string name="password">password</string>
+    <string name="user_empty_test">Username can be empty</string>
+    <string name="pass_empty_test">Password can be empty</string>
+    <string name="add_user_test">Regist failed</string>
+    <string name="add_existing_user_test">Existing username still can be registed</string>
+    <string name="nonexistent_user_login">The user doesn't exist can login</string>
+    <string name="wrongpass_user_login">Username with wrong password also can login</string>
 </resources>
