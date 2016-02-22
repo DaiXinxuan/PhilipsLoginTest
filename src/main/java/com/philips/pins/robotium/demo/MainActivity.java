@@ -14,7 +14,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private EditText usernameEd;
     private EditText passwordEd;
-    private SharedPreferences sharedPreferences;
+    public SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
     @Override
@@ -58,19 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     login(username, password, count);
                     break;
                 case R.id.regist:
-                    if (count != 0) {
-                        //Judge whether the username is already registered
-                        if (isReused(count, username)) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.user_resued),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            //Add a new user
-                            addUser(count, username, password);
-                        }
-                    } else {
-                        //Add a new user
-                        addUser(count, username, password);
-                    }
+                    regist(username, password, count);
                     break;
             }
         }
@@ -84,6 +72,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         editor.putString(getString(R.string.user), username);
         editor.commit();
         Toast.makeText(getApplicationContext(), getString(R.string.regist_success), Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean regist(String username, String password, int count){
+        if (count != 0) {
+            //Judge whether the username is already registered
+            if (isReused(count, username)) {
+                Toast.makeText(getApplicationContext(), getString(R.string.user_resued),
+                        Toast.LENGTH_SHORT).show();
+                return false;
+            } else {
+                //Add a new user
+                addUser(count, username, password);
+                return true;
+            }
+        } else {
+            //Add a new user
+            addUser(count, username, password);
+            return true;
+        }
     }
 
     /**

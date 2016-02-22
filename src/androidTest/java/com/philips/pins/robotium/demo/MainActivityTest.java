@@ -10,13 +10,14 @@ import com.robotium.solo.Solo;
  */
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity>{
     private Solo solo;
-
+    private MainActivity mainActivity;
     public MainActivityTest() {
         super(MainActivity.class);
     }
 
     @Override
     protected void setUp() throws Exception {
+        mainActivity = getActivity();
         solo = new Solo(getInstrumentation(), getActivity());
         //Unlock the lock screen
         solo.unlockScreen();
@@ -32,59 +33,61 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
 
-    public void testUsernameEmpty() throws Exception {
-        solo.clickOnView(solo.getView(R.id.regist));
-        boolean actual = solo.searchText(solo.getString(R.string.empty_user));
-        assertTrue(solo.getString(R.string.user_empty_test), actual);
-    }
+//    public void testUsernameEmpty() throws Exception {
+//        solo.clickOnView(solo.getView(R.id.regist));
+//        boolean actual = solo.searchText(solo.getString(R.string.empty_user));
+//        assertTrue(solo.getString(R.string.user_empty_test), actual);
+//    }
+//
+//    public void testPasswordEmpty() throws Exception {
+//        solo.enterText((EditText)solo.getView(R.id.username),"Test");
+//        solo.clickOnView(solo.getView(R.id.regist));
+//        boolean actual = solo.searchText(solo.getString(R.string.empty_pass));
+//        assertTrue(solo.getString(R.string.pass_empty_test), actual);
+//    }
+//
+//    public void testAddNewUser() throws Exception {
+//        solo.enterText((EditText)solo.getView(R.id.username), "miniTest2");
+//        solo.enterText((EditText)solo.getView(R.id.password), "12345");
+//        solo.clickOnView(solo.getView(R.id.regist));
+//        boolean actual = solo.searchText(solo.getString(R.string.regist_success));
+//        assertTrue(solo.getString(R.string.add_user_test), actual);
+//    }
+//
+//    public void testAddExistingUser() throws Exception {
+//        solo.enterText((EditText)solo.getView(R.id.username), "miniTest2");
+//        solo.enterText((EditText)solo.getView(R.id.password), "1234");
+//        solo.clickOnView(solo.getView(R.id.regist));
+//        boolean actual = solo.searchText(solo.getString(R.string.regist_success));
+//        assertFalse(solo.getString(R.string.add_existing_user_test), actual);
+//    }
+//
+//    public void testLoginExistingUser() throws Exception {
+//        solo.enterText((EditText)solo.getView(R.id.username), "miniTest2");
+//        solo.enterText((EditText)solo.getView(R.id.password), "12345");
+//        solo.clickOnView(solo.getView(R.id.login));
+//        boolean actual = solo.searchText(solo.getString(R.string.login_success));
+//        assertTrue(solo.getString(R.string.login_fail), actual);
+//    }
+//
+//    public void testLoginNotExistingUser() throws Exception {
+//        solo.enterText((EditText)solo.getView(R.id.username), "daixinxuan12345890");
+//        solo.enterText((EditText)solo.getView(R.id.password), "12345");
+//        solo.clickOnView(solo.getView(R.id.login));
+//        boolean actual = solo.searchText(solo.getString(R.string.nonexisten_user));
+//        assertTrue(solo.getString(R.string.nonexistent_user_login), actual);
+//    }
 
-    public void testPasswordEmpty() throws Exception {
-        solo.enterText((EditText)solo.getView(R.id.username),"Test");
-        solo.clickOnView(solo.getView(R.id.regist));
-        boolean actual = solo.searchText(solo.getString(R.string.empty_pass));
-        assertTrue(solo.getString(R.string.pass_empty_test), actual);
-    }
-
-    public void testAddNewUser() throws Exception {
-        solo.enterText((EditText)solo.getView(R.id.username), "miniTest2");
-        solo.enterText((EditText)solo.getView(R.id.password), "12345");
-        solo.clickOnView(solo.getView(R.id.regist));
-        boolean actual = solo.searchText(solo.getString(R.string.regist_success));
-        assertTrue(solo.getString(R.string.add_user_test), actual);
-    }
-
-    public void testAddExistingUser() throws Exception {
-        solo.enterText((EditText)solo.getView(R.id.username), "miniTest2");
-        solo.enterText((EditText)solo.getView(R.id.password), "1234");
-        solo.clickOnView(solo.getView(R.id.regist));
-        boolean actual = solo.searchText(solo.getString(R.string.regist_success));
-        assertFalse(solo.getString(R.string.add_existing_user_test), actual);
-    }
-
-    public void testLoginExistingUser() throws Exception {
-        solo.enterText((EditText)solo.getView(R.id.username), "miniTest2");
-        solo.enterText((EditText)solo.getView(R.id.password), "12345");
-        solo.clickOnView(solo.getView(R.id.login));
-        boolean actual = solo.searchText(solo.getString(R.string.login_success));
-        assertTrue(solo.getString(R.string.login_fail), actual);
-    }
-
-    public void testLoginNotExistingUser() throws Exception {
-        solo.enterText((EditText)solo.getView(R.id.username), "daixinxuan12345890");
-        solo.enterText((EditText)solo.getView(R.id.password), "12345");
-        solo.clickOnView(solo.getView(R.id.login));
-        boolean actual = solo.searchText(solo.getString(R.string.nonexisten_user));
-        assertTrue(solo.getString(R.string.nonexistent_user_login), actual);
-    }
-
-    public void testLoginWithWrongPass () throws Exception {
-        solo.enterText((EditText)solo.getView(R.id.username), "miniTest2");
-        solo.enterText((EditText) solo.getView(R.id.password), "123456");
-        solo.clickOnView(solo.getView(R.id.login));
-        boolean actual = solo.searchText(solo.getString(R.string.login_fail));
-        assertTrue(solo.getString(R.string.wrongpass_user_login), actual);
-    }
+//    public void testLoginWithWrongPass () throws Exception {
+//        solo.enterText((EditText)solo.getView(R.id.username), "miniTest2");
+//        solo.enterText((EditText) solo.getView(R.id.password), "123456");
+//        solo.clickOnView(solo.getView(R.id.login));
+//        boolean actual = solo.searchText(solo.getString(R.string.login_fail));
+//        assertTrue(solo.getString(R.string.wrongpass_user_login), actual);
+//    }
 
     public void testLogin() throws Exception {
+        Boolean b = mainActivity.regist("666", "123456", mainActivity.sharedPreferences.getInt("count", -1));
+        assertTrue("Login failed: testLogin()",b);
     }
 }
