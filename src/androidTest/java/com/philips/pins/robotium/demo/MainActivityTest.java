@@ -3,6 +3,7 @@ package com.philips.pins.robotium.demo;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.EditText;
 
+import com.philips.pins.robotium.demo.bean.UserBean;
 import com.robotium.solo.Solo;
 
 /**
@@ -87,7 +88,8 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void testRegist() throws Exception {
-        Boolean b = mainActivity.getUserPresenter().regist("777", "123456", mainActivity.getUserPresenter().getSharedPreference().getInt("count", -1));
+        UserBean userBean = new UserBean("777", "123456");
+        Boolean b = mainActivity.getUserPresenter().regist(userBean, mainActivity.getUserPresenter().getSharedPreference().getInt("count", -1));
         assertTrue("Regist failed: testRegist()",b);
     }
 }

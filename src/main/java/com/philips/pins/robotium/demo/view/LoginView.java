@@ -5,10 +5,10 @@ import android.content.SharedPreferences;
 /**
  * Created by dxx on 2016/2/22.
  */
-public interface ILoginView {
+public interface LoginView {
     String getUsername();
     String getPassword();
 
     void setUsername(SharedPreferences sp);
-    void showToast(String message);
+    void showMessage(String message);
 }

@@ -1,71 +1,31 @@
 package com.philips.pins.robotium.demo.model;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.philips.pins.robotium.demo.R;
+import com.philips.pins.robotium.demo.bean.UserBean;
 
 
 /**
  * Created by dxx on 2016/2/22.
  */
-public class UserModelImpl implements IUserModel {
+public class UserModelImpl implements UserModel {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private Context context;
 
-    public UserModelImpl(SharedPreferences sp, Context c){
-        this.sp = sp;
-        this.editor = sp.edit();
+    public UserModelImpl(Context c){
         context = c;
-        editor = sp.edit();
-        //If the number of users has not been initialized, let it be 0
-        int count = sp.getInt(c.getString(R.string.count), -1);
-        if (count == -1) {
-            editor.putInt(c.getString(R.string.count), 0);
-            editor.commit();
-        }
+        this.sp = c.getSharedPreferences(c.getString(R.string.profile), Activity.MODE_PRIVATE);
+        this.editor = sp.edit();
     }
 
-    @Override
-    public boolean regist(String username, String password, int count) {
-        if (count != 0) {
-            //Judge whether the username is already registered
-            if (isReused(count, username)) {
-                return false;
-            } else {
-                //Add a new user
-                addUser(count, username, password);
-                return true;
-            }
-        } else {
-            //Add a new user
-            addUser(count, username, password);
-            return true;
-        }
-    }
-
-    @Override
-    public int login(String username, String password, int count) {
-        if (getUserNumber(count, username) == -1) {
-            return -1;
-        } else {
-            String correctPass = sp.getString(context.getString(R.string.password) + getUserNumber(count, username), "");
-            if (password.equals(correctPass)) {
-                editor.putString(context.getString(R.string.user), username);
-                editor.commit();
-                return 1;
-            } else {
-                return 0;
-            }
-        }
-    }
-
-
-    public void addUser(int count, String username, String password){
-        //因为没有使用数组和列表来存储用户数据，所以只是将JavaBean创建了出来，没有进行实际存储操作
+    public void addUser(int count, UserBean userBean){
+        String username = userBean.getUsername();
+        String password = userBean.getPassword();
         count += 1;
         editor.putString(context.getString(R.string.user) + count, username);
         editor.putString(context.getString(R.string.password) + count, password);

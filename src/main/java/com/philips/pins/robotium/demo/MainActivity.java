@@ -8,20 +8,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.philips.pins.robotium.demo.presenter.IUserPresenter;
+import com.philips.pins.robotium.demo.bean.UserBean;
+import com.philips.pins.robotium.demo.presenter.UserPresenter;
 import com.philips.pins.robotium.demo.presenter.UserPresenterImpl;
-import com.philips.pins.robotium.demo.view.ILoginView;
+import com.philips.pins.robotium.demo.view.LoginView;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ILoginView{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, LoginView {
     private EditText usernameEd;
     private EditText passwordEd;
 
-    public IUserPresenter getUserPresenter() {
+    public UserPresenter getUserPresenter() {
         return userPresenter;
     }
 
-    private IUserPresenter userPresenter;
+    private UserPresenter userPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         userPresenter = new UserPresenterImpl(this, getApplicationContext());
 
         //Display the last account logged successfully
-        userPresenter.display();
+        userPresenter.displayLastLoginUsername();
     }
 
     //Initialize the controls
@@ -48,16 +49,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int count = userPresenter.getSharedPreference().getInt(getString(R.string.count), 0);
 
         if (TextUtils.isEmpty(username)) {
-            showToast(getString(R.string.empty_user));
+            showMessage(getString(R.string.empty_user));
         } else if (TextUtils.isEmpty(password)) {
-            showToast(getString(R.string.empty_pass));
+            showMessage(getString(R.string.empty_pass));
         } else {
+            UserBean userBean = new UserBean(username, password);
             switch (v.getId()) {
                 case R.id.login:
-                    userPresenter.login(username, password, count);
+                    userPresenter.login(userBean, count);
                     break;
                 case R.id.regist:
-                    userPresenter.regist(username, password, count);
+                    userPresenter.regist(userBean, count);
                     break;
             }
         }
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void showToast(String message) {
+    public void showMessage(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }
