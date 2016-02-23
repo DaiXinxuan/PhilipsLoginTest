@@ -16,6 +16,11 @@ import com.philips.pins.robotium.demo.view.ILoginView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ILoginView{
     private EditText usernameEd;
     private EditText passwordEd;
+
+    public IUserPresenter getUserPresenter() {
+        return userPresenter;
+    }
+
     private IUserPresenter userPresenter;
 
     @Override

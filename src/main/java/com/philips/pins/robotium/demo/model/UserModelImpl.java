@@ -67,7 +67,6 @@ public class UserModelImpl implements IUserModel {
     public void addUser(int count, String username, String password){
         //因为没有使用数组和列表来存储用户数据，所以只是将JavaBean创建了出来，没有进行实际存储操作
         count += 1;
-        Log.d("Present User count is ", count+"");
         editor.putString(context.getString(R.string.user) + count, username);
         editor.putString(context.getString(R.string.password) + count, password);
         editor.putInt(context.getString(R.string.count), count);

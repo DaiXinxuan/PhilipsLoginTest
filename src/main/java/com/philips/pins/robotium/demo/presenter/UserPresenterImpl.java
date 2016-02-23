@@ -3,6 +3,7 @@ package com.philips.pins.robotium.demo.presenter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.philips.pins.robotium.demo.R;
 import com.philips.pins.robotium.demo.model.IUserModel;
@@ -15,8 +16,8 @@ import com.philips.pins.robotium.demo.view.ILoginView;
 public class UserPresenterImpl implements IUserPresenter{
     private SharedPreferences sp;
     private ILoginView iLoginView;
-    public IUserModel userModel;
-    public Context c;
+    private IUserModel userModel;
+    private Context c;
 
     public UserPresenterImpl(ILoginView iLoginView, Context context) {
         this.iLoginView = iLoginView;

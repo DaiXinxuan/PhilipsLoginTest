@@ -87,7 +87,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
     }
 
     public void testRegist() throws Exception {
-        Boolean b = mainActivity.regist("666", "123456", mainActivity.getSharedPreferences().getInt("count", -1));
+        Boolean b = mainActivity.getUserPresenter().regist("777", "123456", mainActivity.getUserPresenter().getSharedPreference().getInt("count", -1));
         assertTrue("Regist failed: testRegist()",b);
     }
 }
