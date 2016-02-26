@@ -19,6 +19,6 @@
     <string name="pass_empty_test">Password can be empty</string>
     <string name="add_user_test">Regist failed</string>
     <string name="add_existing_user_test">Existing username still can be registed</string>
-    <string name="nonexistent_user_login">The user doesn't exist can login</string>
+    <string name="nonexistent_user_login">The user does not exist can login</string>
     <string name="wrongpass_user_login">Username with wrong password also can login</string>
 </resources>

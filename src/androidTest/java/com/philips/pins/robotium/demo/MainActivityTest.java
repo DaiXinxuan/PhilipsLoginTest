@@ -3,6 +3,7 @@ package com.philips.pins.robotium.demo;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.EditText;
 
+import com.philips.pins.robotium.demo.bean.UserBean;
 import com.robotium.solo.Solo;
 
 /**
@@ -10,13 +11,14 @@ import com.robotium.solo.Solo;
  */
 public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity>{
     private Solo solo;
-
+    private MainActivity mainActivity;
     public MainActivityTest() {
         super(MainActivity.class);
     }
 
     @Override
     protected void setUp() throws Exception {
+        mainActivity = getActivity();
         solo = new Solo(getInstrumentation(), getActivity());
         //Unlock the lock screen
         solo.unlockScreen();
@@ -85,6 +87,9 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
         assertTrue(solo.getString(R.string.wrongpass_user_login), actual);
     }
 
-    public void testLogin() throws Exception {
+    public void testRegist() throws Exception {
+        UserBean userBean = new UserBean("777", "123456");
+        Boolean b = mainActivity.getUserPresenter().regist(userBean, mainActivity.getUserPresenter().getSharedPreference().getInt("count", -1));
+        assertTrue("Regist failed: testRegist()",b);
     }
 }

@@ -1,6 +1,5 @@
 package com.philips.pins.robotium.demo;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,31 +8,32 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.philips.pins.robotium.demo.bean.UserBean;
+import com.philips.pins.robotium.demo.presenter.UserPresenter;
+import com.philips.pins.robotium.demo.presenter.UserPresenterImpl;
+import com.philips.pins.robotium.demo.view.LoginView;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, LoginView {
     private EditText usernameEd;
     private EditText passwordEd;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+
+    public UserPresenter getUserPresenter() {
+        return userPresenter;
+    }
+
+    private UserPresenter userPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        sharedPreferences = getSharedPreferences(getString(R.string.profile), Activity.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        //If the number of users has not been initialized, let it be 0
-        int count = sharedPreferences.getInt(getString(R.string.count), -1);
-        if (count == -1) {
-            editor.putInt(getString(R.string.count),0);
-            editor.commit();
-        }
+
+        userPresenter = new UserPresenterImpl(this, getApplicationContext());
+
         //Display the last account logged successfully
-        if (!sharedPreferences.getString(getString(R.string.user),"").equals("")) {
-            usernameEd.setText(sharedPreferences.getString(getString(R.string.user), ""));
-        }
+        userPresenter.displayLastLoginUsername();
     }
 
     //Initialize the controls
@@ -44,105 +44,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        String username = usernameEd.getText().toString();
-        String password = passwordEd.getText().toString();
-        int count = sharedPreferences.getInt(getString(R.string.count), 0);
+        String username = getUsername();
+        String password = getPassword();
+        int count = userPresenter.getSharedPreference().getInt(getString(R.string.count), 0);
 
         if (TextUtils.isEmpty(username)) {
-            Toast.makeText(getApplicationContext(),getString(R.string.empty_user),Toast.LENGTH_SHORT).show();
+            showMessage(getString(R.string.empty_user));
         } else if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getApplicationContext(),getString(R.string.empty_pass),Toast.LENGTH_SHORT).show();
+            showMessage(getString(R.string.empty_pass));
         } else {
+            UserBean userBean = new UserBean(username, password);
             switch (v.getId()) {
                 case R.id.login:
-                    login(username, password, count);
+                    userPresenter.login(userBean, count);
                     break;
                 case R.id.regist:
-                    if (count != 0) {
-                        //Judge whether the username is already registered
-                        if (isReused(count, username)) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.user_resued),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            //Add a new user
-                            addUser(count, username, password);
-                        }
-                    } else {
-                        //Add a new user
-                        addUser(count, username, password);
-                    }
+                    userPresenter.regist(userBean, count);
                     break;
             }
         }
     }
 
-    public void addUser(int count, String username, String password){
-        count += 1;
-        editor.putString(getString(R.string.user) + count, username);
-        editor.putString(getString(R.string.password) + count, password);
-        editor.putInt(getString(R.string.count), count);
-        editor.putString(getString(R.string.user), username);
-        editor.commit();
-        Toast.makeText(getApplicationContext(), getString(R.string.regist_success), Toast.LENGTH_SHORT).show();
+
+    @Override
+    public String getUsername() {
+        return usernameEd.getText().toString();
     }
 
-    /**
-     *
-     * @param username
-     * @param password
-     * @param count
-     * @return
-     */
-    public boolean login(String username, String password, int count){
-        if (getUserNumber(count, username) == -1) {
-            Toast.makeText(getApplicationContext(), getString(R.string.nonexisten_user),
-                    Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            String correctPass = sharedPreferences.getString(getString(R.string.password) + getUserNumber(count, username), "");
-            if (password.equals(correctPass)) {
-                Toast.makeText(getApplicationContext(), getString(R.string.login_success), Toast.LENGTH_SHORT).show();
-                return true;
-            } else {
-                Toast.makeText(getApplicationContext(), getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        }
+    @Override
+    public String getPassword() {
+        return passwordEd.getText().toString();
     }
 
-    /**
-     * Determine whether the username is already registered
-     * @param count the number of users
-     * @param username
-     * @return
-     */
-    public boolean isReused(int count, String username) {
-        for (int i = 1;i <= count;i++) {
-            String currentUsername = sharedPreferences.getString(getString(R.string.user) + i,"");
-            if (username.equals(currentUsername)) {
-                return true;
-            }
-        }
-        return false;
+    @Override
+    public void setUsername(SharedPreferences sp) {
+        usernameEd.setText(sp.getString(getString(R.string.user), ""));
     }
 
-    /**
-     * Get this user's number
-     * @param count the number of users
-     * @param username
-     * @return
-     */
-    public int getUserNumber(int count, String username) {
-        int i = 1;
-        if(isReused(count, username)) {
-            for (i = 1;i <= count;i++) {
-                String currentUsername = sharedPreferences.getString(getString(R.string.user) + i,"");
-                if (username.equals(currentUsername)) {
-                    break;
-                }
-            }
-            return i;
-        } else return -1;
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
-
 }
